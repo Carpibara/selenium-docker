@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  hub:
+    image: selenium/hub:3.141.59-20210830
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=5556
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=5557
+
+  firefox:
+    image: selenium/node-firefox
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=5556
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=5557
+
